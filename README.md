@@ -44,7 +44,7 @@ All through Telegram. No new app. No dashboard. Just talk to it.
 In the browser terminal, paste this one command:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/opulence-ai/construction-agent/main/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/afinnegan67/construction-agent/main/setup.sh | bash
 ```
 
 This installs Hermes, the construction profile, the Context OS folder

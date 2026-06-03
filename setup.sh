@@ -15,7 +15,7 @@ YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-REPO="https://raw.githubusercontent.com/opulence-ai/construction-agent/main"
+REPO="https://raw.githubusercontent.com/afinnegan67/construction-agent/main"
 HERMES_HOME="$HOME/.hermes"
 PROFILE_DIR="$HERMES_HOME/profiles/construction"
 SKILLS_DIR="$PROFILE_DIR/skills"

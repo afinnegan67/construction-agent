@@ -37,7 +37,7 @@ This opens a terminal in your browser. Nothing to install on your computer.
 Copy and paste this command into the browser terminal. Press Enter.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/opulence-ai/construction-agent/main/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/afinnegan67/construction-agent/main/setup.sh | bash
 ```
 
 This installs Hermes (the AI agent), the construction profile, the Context OS
@@ -152,8 +152,8 @@ hermes cron create "0 */15 * * * *" \
 
 ## Links
 
-- **GitHub repo (all code):** [github.com/opulence-ai/construction-agent](https://github.com/opulence-ai/construction-agent)
-- **Construction profile:** [github.com/opulence-ai/construction-agent/blob/main/construction-profile.md](https://github.com/opulence-ai/construction-agent/blob/main/construction-profile.md)
+- **GitHub repo (all code):** [github.com/afinnegan67/construction-agent](https://github.com/afinnegan67/construction-agent)
+- **Construction profile:** [github.com/afinnegan67/construction-agent/blob/main/construction-profile.md](https://github.com/afinnegan67/construction-agent/blob/main/construction-profile.md)
 - **Hermes Agent:** [github.com/NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent)
 - **Hetzner Cloud:** [hetzner.com/cloud](https://hetzner.com/cloud)
 - **Opulence AI (we'll set this up for you):** [opulence.ai](https://opulence.ai)
