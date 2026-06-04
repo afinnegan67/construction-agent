@@ -1,4 +1,10 @@
-# Gmail Skill for Hermes
+---
+name: gmail
+description: Search, read, and cite Gmail messages and attachments using the Gmail API. Load when the user asks about email content, projects, or any question that might be answered in their inbox.
+version: 1.0.0
+---
+
+# Gmail
 
 This skill teaches Hermes how to search, read, and file emails from Gmail.
 
@@ -17,12 +23,9 @@ re-authorization automatically.
 ## Setup Commands
 
 ```bash
-# Install Google API Python client on the server
 pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib
 
-# Store credentials
 mkdir -p ~/.hermes/credentials/
-# Place OAuth client JSON at ~/.hermes/credentials/gmail-oauth.json
 ```
 
 ## Skill File: SKILL.md
@@ -35,8 +38,6 @@ description: Search and read Gmail emails. File relevant emails into project
 version: 1.0.0
 ---
 
-# Gmail
-
 You have access to the contractor's Gmail inbox. You can search, read, and
 extract information from emails and their attachments.
 
@@ -46,16 +47,12 @@ Use the Gmail API via the Python client. Always search with these filters to
 keep results relevant:
 
 ```
-# Search by project name (look in subject and body)
 q="Thompson" OR "Thompson Residence"
 
-# Search by sender
 q="from:dan@precisioncabinetswa.com"
 
-# Search by date range
 q="after:2026/05/01 before:2026/06/03"
 
-# Combined search
 q="(Thompson OR Henderson) from:subcontractor@example.com after:2026/05/01"
 ```
 
@@ -79,7 +76,6 @@ When you process new emails:
 
 Format for filed emails:
 ```markdown
-# {Subject}
 **From:** {sender}
 **Date:** {date}
 **Project:** {project name}

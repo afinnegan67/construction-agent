@@ -1,4 +1,10 @@
-# Google Drive Skill for Hermes
+---
+name: google-drive
+description: Search and read files (PDFs, docs, spec sheets) from Google Drive. Load when the user asks about documents, specs, contracts, plans, or anything filed in Drive.
+version: 1.0.0
+---
+
+# Google Drive
 
 This skill teaches Hermes how to search, read, and reference files from Google
 Drive.
@@ -14,9 +20,6 @@ https://www.googleapis.com/auth/drive.readonly
 ## Setup
 
 ```bash
-# Same credentials JSON used for Gmail
-# Place at ~/.hermes/credentials/drive-oauth.json
-# Or reuse the same OAuth client with both scopes
 ```
 
 ## Skill File: SKILL.md
@@ -29,8 +32,6 @@ description: Search and read files from Google Drive. Find spec sheets,
 version: 1.0.0
 ---
 
-# Google Drive
-
 You have access to the contractor's Google Drive. You can search, read, and
 extract information from stored files.
 
@@ -39,16 +40,12 @@ extract information from stored files.
 Use the Drive API. Search by filename, folder, or content type:
 
 ```
-# Search by filename
 q="name contains 'Thompson'"
 
-# Search by file type
 q="mimeType='application/pdf'"
 
-# Search by folder
 q="'folder-id-here' in parents"
 
-# Combined search
 q="name contains 'spec' and mimeType='application/pdf' and 'project-folder-id' in parents"
 ```
 
@@ -71,7 +68,6 @@ Spec sheets are the most frequently queried documents. When you find one:
 
 Format for filed specs:
 ```markdown
-# {Product Name}
 **Model:** {model number}
 **Supplier:** {supplier name}
 **File:** {original filename}

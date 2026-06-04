@@ -1,4 +1,10 @@
-# Context OS Maintenance
+---
+name: context-os-maintenance
+description: Maintain the Context OS — file emails/voice-notes/decisions into per-project folders under ~/workspace/context-os/. Load on every interaction.
+version: 1.0.0
+---
+
+# Context Os Maintenance
 
 You maintain the Context OS at `~/workspace/context-os/`. This is your
 permanent memory. Everything you learn from emails, voice notes, documents,
@@ -27,7 +33,6 @@ When you process an email (from Gmail or described by the contractor):
 2. Create file: `projects/{project}/documents/{date}-email-{sender-slug}-{subject-slug}.md`
 3. Format:
 ```markdown
-# {Subject}
 **From:** {sender} | **Date:** {date} | **Project:** {project}
 {body summary}
 **Attachments:** {list}
@@ -56,7 +61,6 @@ When you encounter a product spec sheet:
 3. Create file: `projects/{project}/specs/{product-name-slug}.md`
 4. Format:
 ```markdown
-# {Product Name}
 **Model:** {#} | **Supplier:** {name}
 **Source File:** {original filename}
 **Last Updated:** {date}

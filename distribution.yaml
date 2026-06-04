@@ -1,0 +1,37 @@
+name: construction-agent
+version: 0.2.0
+description: "AI employee for residential contractors. Reads Gmail + Google Drive, cites sources, transcribes voice notes, and proactively flags unanswered emails — all through Telegram."
+hermes_requires: ">=0.13.0"
+author: "Opulence AI"
+license: "MIT"
+
+# Distribution-owned files: replaced cleanly on `hermes profile update`.
+# Everything not listed here stays user-owned (config tweaks, .env, memories, sessions, workspace).
+distribution_owned:
+  - SOUL.md
+  - skills/
+  - cron/
+  - distribution.yaml
+
+# Required env vars. The installer prints a checklist and writes .env.EXAMPLE
+# pre-populated with these — you copy to .env and fill in real values.
+env_requires:
+  - name: OPENROUTER_API_KEY
+    description: "OpenRouter API key — pays for the language model that powers the agent. Get one at openrouter.ai."
+    required: true
+
+  - name: TELEGRAM_BOT_TOKEN
+    description: "Telegram bot token from @BotFather. Send /newbot in Telegram to create one."
+    required: true
+
+  - name: TELEGRAM_ALLOWED_USERS
+    description: "Comma-separated Telegram user IDs allowed to talk to the bot. Without this, the bot ignores everyone. Get your ID from @userinfobot."
+    required: true
+
+  - name: TELEGRAM_HOME_CHANNEL
+    description: "Telegram chat ID where proactive flags get delivered. Use your own user ID for DMs."
+    required: true
+
+  - name: GROQ_API_KEY
+    description: "Groq API key — transcribes voice notes (free tier is plenty). Get one at console.groq.com."
+    required: true

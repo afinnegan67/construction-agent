@@ -1,3 +1,9 @@
+---
+name: data-mapping
+description: Onboarding conversation: walk the contractor through 24 questions to discover all their data sources and output a data-map.md. Triggered by 'connect my business data' / 'map my systems'.
+version: 1.0.0
+---
+
 # Data Mapping
 
 Use this skill when the contractor says "I want to connect my business data"
@@ -72,7 +78,6 @@ Ask these questions in order. Wait for each answer. Don't rush.
 After the conversation, create `organizations/{org-name}/data-map.md`:
 
 ```markdown
-# Data Map for {Organization Name}
 Generated: {date}
 
 ## Tier 1 — Easy to Connect (Open APIs Exist)

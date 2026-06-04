@@ -1,0 +1,25 @@
+model:
+  default: anthropic/claude-sonnet-4
+  provider: openrouter
+
+# Voice transcription: Groq is the right call for a small Railway box.
+# No GPU needed, free tier covers heavy use, ~1s latency on short voice notes.
+stt:
+  provider: groq
+
+# Telegram gateway — polling mode (outbound). Required for an always-on
+# server where the agent must wake itself every 15 minutes for the cron flag.
+# Do NOT set TELEGRAM_WEBHOOK_URL in the .env — that would switch to webhook
+# (sleep-when-idle) mode and break the proactive scanner.
+telegram:
+  require_mention: false
+
+# Cron output wrapper off so proactive flags read like clean Telegram messages,
+# not framed inside a system response box.
+cron:
+  wrap_response: false
+
+# Default working directory for the agent's terminal/file tools.
+# Workspace is scaffolded by init-workspace.sh, NOT shipped with this distribution.
+terminal:
+  cwd: /root/workspace

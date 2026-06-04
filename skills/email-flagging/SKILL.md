@@ -1,4 +1,10 @@
-# Proactive Email Flagging — Cron Setup
+---
+name: email-flagging
+description: Proactive inbox scan. Find emails with unanswered questions, action requests, or deadlines and post a flag to the Telegram home channel. Used by the every-15-minute cron job.
+version: 1.0.0
+---
+
+# Email Flagging
 
 This documents the cron job and skill that makes the agent proactively check
 for unresolved emails and flag them to the contractor through Telegram.
@@ -18,21 +24,19 @@ agent respects it.
 
 ## Cron Job Setup
 
+This skill is meant to be loaded by a cron job. From the Railway service Shell tab,
+create the job once and the scheduler runs it every 15 minutes:
+
 ```bash
-hermes cron create "0 */15 * * * *" \
-  --profile construction \
-  --prompt "Load the email-flagging skill. Scan the Gmail inbox for the last
-4 hours. Find emails that: (1) ask a question or request an action, (2) have
-no response from the contractor in the thread, (3) were received more than 2
-hours ago. For each one found, send a brief flag to the contractor through
-Telegram with: the sender name, project, subject, date received, and a
-one-line summary of what's needed. Do NOT flag emails that were already
-flagged in a previous check. Keep it to 3 flags max per check. Format each
-flag as: 'Flag: [Name] from [Company] emailed about [topic] on [date].
-[One-line action needed].'" \
-  --name "email-flagging" \
-  --deliver origin
+hermes -p construction-agent cron create \
+  "every 15m" \
+  "Run the email-flagging skill. Scan Gmail for unresolved action items from the last 24 hours and flag them to Telegram." \
+  --skill email-flagging \
+  --name "inbox-flagging"
 ```
+
+The agent's response is delivered automatically to `TELEGRAM_HOME_CHANNEL` — you
+don't need to call `send_message` from inside the skill.
 
 ## Flag Format
 
@@ -73,8 +77,6 @@ The agent maintains a file at `~/workspace/construction/global/flagged-emails.md
 that tracks every email it has flagged:
 
 ```markdown
-# Flagged Emails Log
-
 | ID | Date Flagged | Sender | Subject | Status |
 |----|-------------|--------|---------|--------|
 | msg_001 | 2026-06-03 | Tony Vasquez | Thompson master bath tile | flagged |
@@ -93,8 +95,6 @@ description: Scan Gmail inbox for unresolved action items and flag them to the
   contractor through Telegram
 version: 1.0.0
 ---
-
-# Email Flagging
 
 Periodic scan of the inbox for emails that need attention. Designed to be run
 as a cron job every 15 minutes.
