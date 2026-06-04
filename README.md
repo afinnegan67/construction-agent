@@ -52,7 +52,7 @@ the number it shows. This is your `TELEGRAM_ALLOWED_USERS` value.
 2. Click **New** → **Deploy from GitHub repo**
 3. Pick `afinnegan67/construction-agent`
 4. Railway reads the `Dockerfile` and `railway.json` and starts building
-5. While it builds, click **Variables** and add these five (paste your real values):
+5. While it builds, click **Variables** and add these six (paste your real values):
 
    | Variable | Value |
    |---|---|
@@ -61,23 +61,45 @@ the number it shows. This is your `TELEGRAM_ALLOWED_USERS` value.
    | `TELEGRAM_BOT_TOKEN` | the BotFather token |
    | `TELEGRAM_ALLOWED_USERS` | your Telegram user ID |
    | `TELEGRAM_HOME_CHANNEL` | your Telegram user ID (same number) |
+   | `CODE_SERVER_PASSWORD` | any strong password — you'll use this to log into VS Code in your browser |
 
 6. Click **Settings** → make sure **Sleep when idle** is **off**. The agent has
    to stay awake so the every-15-minute scanner can fire.
-7. Watch the **Deploy Logs**. You're done when you see:
+7. Still in **Settings** → **Networking** → click **Generate Domain**. Railway
+   gives you a public HTTPS URL like `your-service.up.railway.app`. This is
+   where your browser-based VS Code lives.
+8. Watch the **Deploy Logs**. You're done when you see:
    ```
+   [entrypoint] Starting code-server on 0.0.0.0:8080
    [entrypoint] Starting Hermes gateway in polling mode...
    [telegram] Connected to Telegram (polling mode)
    ```
 
-### 4. Say hi
+### 4. Open VS Code in your browser
+
+Visit the Railway URL from step 7. You'll see a password prompt — paste your
+`CODE_SERVER_PASSWORD`. You're now in real VS Code, looking at the live
+filesystem of your AI employee:
+
+- **`workspace/context-os/`** — every project folder. Watch this update in real
+  time as the agent files emails, decisions, and voice-note transcripts.
+- **`~/.hermes/profiles/construction-agent/`** — open the side panel and navigate
+  here to see your agent's brain: `SOUL.md` is the personality, `skills/` is
+  every skill it can run, `config.yaml` is the model + STT config.
+- **Terminal panel** (`Ctrl+\``) — full bash shell inside the container.
+  This is where you run the one-time `hermes cron create` command in step 6.
+
+You can leave this tab open during a demo. Every time the agent files
+something through Telegram, you'll see the file appear in the explorer.
+
+### 5. Say hi
 
 On your phone, in Telegram, search your bot's username and send `/start`.
 The agent replies. Congratulations — your AI employee is alive.
 
-### 5. Turn on proactive flagging
+### 6. Turn on proactive flagging
 
-In the Railway dashboard, click your service, click the **Shell** tab, and run:
+In the VS Code terminal you opened in step 4, run:
 
 ```bash
 hermes -p construction-agent cron create \
@@ -121,8 +143,8 @@ construction-agent/
 │   └── email-flagging/SKILL.md            ← proactive inbox scan (the cron's brain)
 ├── cron/README.md           ← how to enable the every-15-min flag job
 ├── context-os-seed/         ← README files that get copied into ~/workspace/context-os/
-├── Dockerfile               ← Python 3.12 + Hermes + ffmpeg, runs entrypoint
-├── railway-entrypoint.sh    ← first-boot installs the profile, every-boot starts gateway
+├── Dockerfile               ← Python 3.12 + Hermes + ffmpeg + code-server, runs entrypoint
+├── railway-entrypoint.sh    ← first-boot installs profile, every-boot starts VS Code + gateway
 ├── railway.json             ← always-on, restart-on-failure, no sleep
 └── init-workspace.sh        ← rebuilds the Context OS folder tree if you ever need to
 ```

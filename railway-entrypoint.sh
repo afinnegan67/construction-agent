@@ -50,7 +50,7 @@ ENV_FILE="${PROFILE_DIR}/.env"
     echo "# Variables tab instead."
     for var in OPENROUTER_API_KEY TELEGRAM_BOT_TOKEN TELEGRAM_ALLOWED_USERS \
                TELEGRAM_HOME_CHANNEL TELEGRAM_HOME_CHANNEL_NAME \
-               TELEGRAM_CRON_THREAD_ID GROQ_API_KEY; do
+               TELEGRAM_CRON_THREAD_ID GROQ_API_KEY CODE_SERVER_PASSWORD; do
         val="${!var:-}"
         if [ -n "$val" ]; then
             echo "${var}=${val}"
@@ -74,6 +74,31 @@ if [ ${#missing[@]} -ne 0 ]; then
     exit 1
 fi
 
-# ---------- 5. Run the gateway (PID 1, blocks forever) ----------
+# ---------- 5. Start code-server in background (if password is set) ----------
+# code-server gives the contractor real VS Code in the browser, looking at
+# the live filesystem: the Hermes profile, the Context OS workspace, and
+# the running gateway logs. They get a full terminal panel too.
+#
+# Skipped if CODE_SERVER_PASSWORD is unset, so the agent works without it.
+if [ -n "${CODE_SERVER_PASSWORD:-}" ]; then
+    CODE_PORT="${PORT:-8080}"
+    # Open VS Code on the workspace root so the contractor lands inside
+    # ~/workspace with Context OS visible in the sidebar by default.
+    mkdir -p "${WORKSPACE_DIR}"
+    echo "[entrypoint] Starting code-server on 0.0.0.0:${CODE_PORT}"
+    PASSWORD="${CODE_SERVER_PASSWORD}" \
+        code-server \
+            --bind-addr "0.0.0.0:${CODE_PORT}" \
+            --auth password \
+            --disable-telemetry \
+            --disable-update-check \
+            "${WORKSPACE_DIR}" \
+        > /var/log/code-server.log 2>&1 &
+    echo "[entrypoint] code-server PID $! — visit your Railway public URL"
+else
+    echo "[entrypoint] CODE_SERVER_PASSWORD not set — skipping VS Code"
+fi
+
+# ---------- 6. Run the gateway (PID 1, blocks forever) ----------
 echo "[entrypoint] Starting Hermes gateway in polling mode for profile ${PROFILE_NAME}"
 exec hermes -p "${PROFILE_NAME}" gateway

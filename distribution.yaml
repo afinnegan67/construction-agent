@@ -35,3 +35,8 @@ env_requires:
   - name: GROQ_API_KEY
     description: "Groq API key — transcribes voice notes (free tier is plenty). Get one at console.groq.com."
     required: true
+
+  - name: CODE_SERVER_PASSWORD
+    description: "Password for the in-browser VS Code (code-server). Pick any strong password — you'll type it once when you open the Railway public URL. Leave unset to disable the VS Code UI."
+    required: false
+    default: ""

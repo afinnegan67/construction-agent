@@ -16,8 +16,13 @@ FROM python:3.12-slim
 # (Telegram voice notes are ogg/opus, ffmpeg handles them), build tools for
 # any pip packages that compile (PyMuPDF, etc.).
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git curl ca-certificates ffmpeg build-essential \
+    git curl ca-certificates ffmpeg build-essential sudo \
     && rm -rf /var/lib/apt/lists/*
+
+# Install code-server — VS Code in the browser. This is how the contractor
+# sees the agent's filesystem live (Context OS folders, profile, skills)
+# from any device. Optional: only starts if CODE_SERVER_PASSWORD is set.
+RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 # Install Hermes via pip — explicit, no install-script side effects.
 # We pin a floor that supports profile distributions (>=0.13.0).
@@ -40,9 +45,10 @@ WORKDIR /root
 COPY railway-entrypoint.sh /usr/local/bin/railway-entrypoint.sh
 RUN chmod +x /usr/local/bin/railway-entrypoint.sh
 
-# No EXPOSE — Telegram polling is outbound only. Nothing listens on a port.
-# This is why webhook mode is wrong for always-on Railway: webhooks need an
-# inbound HTTPS endpoint, which would require Railway's public networking
-# AND would allow the container to sleep. We want neither.
+# Railway routes its public HTTPS to whatever PORT we set. code-server binds
+# there if CODE_SERVER_PASSWORD is set. Telegram polling is outbound only,
+# so the gateway itself doesn't need a port — code-server is the ONLY thing
+# that listens. No port = code-server disabled, gateway still runs fine.
+EXPOSE 8080
 
 ENTRYPOINT ["/usr/local/bin/railway-entrypoint.sh"]
