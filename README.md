@@ -136,7 +136,10 @@ construction-agent/
 ├── SOUL.md                  ← the agent's personality + construction domain knowledge
 ├── config.yaml              ← model (Sonnet via OpenRouter), STT (Groq), Telegram polling
 ├── skills/                  ← bundled Hermes skills
-│   ├── context-os-maintenance/SKILL.md   ← how the agent files things
+│   ├── context-os-maintenance/SKILL.md   ← how the agent files everything
+│   │                                      ←   (emails, voice notes, invoices,
+│   │                                      ←    time entries, schedule lines,
+│   │                                      ←    specs, decisions, transactions)
 │   ├── data-mapping/SKILL.md              ← onboarding conversation
 │   ├── gmail/SKILL.md                     ← Gmail search + read
 │   ├── google-drive/SKILL.md              ← Drive search + read
@@ -146,7 +149,8 @@ construction-agent/
 ├── Dockerfile               ← Python 3.12 + Hermes + ffmpeg + code-server, runs entrypoint
 ├── railway-entrypoint.sh    ← first-boot installs profile, every-boot starts VS Code + gateway
 ├── railway.json             ← always-on, restart-on-failure, no sleep
-└── init-workspace.sh        ← rebuilds the Context OS folder tree if you ever need to
+├── init-workspace.sh        ← rebuilds the Context OS folder tree if you ever need to
+└── .gitignore               ← never commit secrets (.env, credentials, runtime state)
 ```
 
 ### Why polling mode (not webhook)
