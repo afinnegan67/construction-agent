@@ -9,20 +9,35 @@ own organization.
 
 ```
 {org-name}/
-  company.md         ← Mission, structure, accounts
-  data-map.md        ← Connected data sources by tier
-  agents.md          ← Deployed AI employees and their configs
-  projects/          ← Active and completed projects
-  employees.md       ← Team directory
-  entities.md        ← Clients, subcontractors, vendors, suppliers
-  accounts.md        ← Bank accounts, credit cards
-  rentals.md         ← Equipment inventory
-  pto-policies.md    ← Time-off policies
+├── company.md              ← Mission, structure, company info
+├── data-map.md             ← Connected data sources organized by tier
+├── agents.md               ← Deployed AI employees and their configs
+├── employees.md            ← Team directory: names, roles, contact, rates
+├── entities.md             ← Clients, subs, vendors, suppliers
+├── accounts.md             ← Bank accounts, credit cards, payment methods
+├── rentals.md              ← Equipment inventory and rental tracking
+├── pto-policies.md         ← Time-off policies per employee
+└── projects/               ← Active and completed projects
+    └── {project-name}/     ← Each project is a folder (see project template)
 ```
+
+## Company-Level vs Project-Level
+
+Some data belongs to the company, not a specific project:
+
+| Company Level | Project Level |
+|--------------|---------------|
+| Employee directory | Time entries (hours logged per project) |
+| Entity list (all subs/clients) | Which subs are on this project |
+| Bank accounts | Transactions (money in/out per project) |
+| Equipment inventory | Equipment used on this project |
+| PTO policies | — |
+
+The agent files company data at the company level and project data at the
+project level. Cross-referencing happens automatically when you ask a question.
 
 ## The Agent Maintains This
 
-Your AI employee creates and updates these files. The `data-map.md` is
-generated during onboarding when the agent walks you through the data
-mapping conversation. Everything else gets populated as the agent processes
-emails, voice notes, and documents.
+Your AI employee creates and updates these files. `data-map.md` is generated
+during onboarding. Everything else gets populated as the agent processes
+emails, voice notes, and documents through Telegram.

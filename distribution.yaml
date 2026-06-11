@@ -1,5 +1,5 @@
 name: construction-agent
-version: 0.2.0
+version: 0.3.0
 description: "AI employee for residential contractors. Reads Gmail + Google Drive, cites sources, transcribes voice notes, and proactively flags unanswered emails — all through Telegram."
 hermes_requires: ">=0.13.0"
 author: "Opulence AI"

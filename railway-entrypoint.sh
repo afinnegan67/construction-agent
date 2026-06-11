@@ -31,6 +31,13 @@ if [ ! -d "${WORKSPACE_DIR}/context-os/organizations" ]; then
     mkdir -p "${WORKSPACE_DIR}/context-os/templates/project-template/documents"
     mkdir -p "${WORKSPACE_DIR}/context-os/templates/project-template/specs"
 
+    # Create empty template files for every project data type
+    TEMPLATE="${WORKSPACE_DIR}/context-os/templates/project-template"
+    for table_file in context.md decisions.md schedule-lines.md transactions.md \
+                      time-entries.md invoices.md change-orders.md; do
+        touch "${TEMPLATE}/${table_file}"
+    done
+
     # Copy README seed files from the installed profile so the directory
     # explains itself when the contractor opens it in VS Code.
     if [ -d "${PROFILE_DIR}/context-os-seed" ]; then
